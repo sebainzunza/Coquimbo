@@ -4,4 +4,4 @@
 #
 import opendrift
 o = opendrift.open('seed1000cada1hr_15dias.nc')
-o.plot(filename='figura1.png',fast=true)
+o.plot(filename='figura1.png',fast=True)
