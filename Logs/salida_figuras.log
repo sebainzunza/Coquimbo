@@ -1,0 +1,7 @@
+01:09:19 DEBUG   opendrift.models.basemodel: Adding 17 config items from basemodel
+01:09:19 DEBUG   opendrift.models.basemodel: Adding 4 config items from basemodel
+01:09:19 DEBUG   opendrift.models.basemodel: Adding 34 config items from basemodel
+01:09:19 INFO    opendrift.models.basemodel: OpenDriftSimulation initialised (version 1.6.0 / v1.6.0-176-g151ae59-dirty)
+01:09:19 DEBUG   opendrift.models.basemodel: Adding 13 config items from oceandrift
+01:09:19 DEBUG   opendrift.models.basemodel:   Overwriting config item seed:z
+01:09:19 DEBUG   opendrift.export.io_netcdf: Importing from seed1000cada1hr_15dias.nc
