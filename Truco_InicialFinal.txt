@@ -1,0 +1,16 @@
+lons_start = o.elements_scheduled.lon
+lats_start = o.elements_scheduled.lat
+
+o.run()
+
+index_of_first, index_of_last = o.index_of_activation_and_deactivation()
+lons = o.get_property('lon')[0]
+lats = o.get_property('lat')[0]
+status = o.get_property('status')[0]
+lons_end = lons[index_of_last, range(lons.shape[1])]
+lats_end = lats[index_of_last, range(lons.shape[1])]
+status_end = status[index_of_last, range(lons.shape[1])]
+
+all = np.column_stack([lons_start, lats_start, lons_end, lats_end, status_end])
+   np.savetxt(filename, all, fmt='%.4f')
+   
