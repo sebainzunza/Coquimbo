@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-import matplotlib
-matplotlib.use('Agg')
 
 import sys
 sys.path.append('/home/loco/opendrift/')
@@ -18,9 +15,9 @@ import numpy as np
 #from opendrift.readers import reader_global_landmask
 #from opendrift.readers import reader_netCDF_CF_generic
 from opendrift.readers import reader_ROMS_native
-from opendrift.models.oceandrift import OceanDrift
+from opendrift.models.larvaloco import SeaLice
 
-o = OceanDrift(loglevel=0)
+o = SeaLice(loglevel=0)
 #reader_landmask = reader_global_landmask.Reader('cobertura.txt')
 filename = 'coquimbo_avg.nc';
 #o.set_config('general:basemap_resolution','i')
@@ -32,12 +29,11 @@ print(mosa_native)
 #exit()
 # Agregando elementos
 time=mosa_native.start_time #tiempo de seeding
-outname='seed100_2puntos';
-lons = [-71.33, -71.37]
-lats = [-29.87, -29.62]
-#for i in range(len(lons)):
-for hour in range(3*24):
-    for i in range(len(lons)): 
+outname='seed10_3d2p_sealice';
+lons=[-71.33, -71.37]
+lats=[-29.87, -29.62]
+for i in range(len(lons)):
+    for hour in range(3*24):
        # print("=> Releasing {} particles within a radius of {} m on {} for each lat/lon location".format(
        #     confobj.releaseParticles,
        #     confobj.releaseRadius,
@@ -49,8 +45,25 @@ for hour in range(3*24):
                         time=time + timedelta(hours=hour),
                         z=-10) # "seafloor+0.5")  # z=-30 + (1.0 * random.randint(0, 10)))
 time += timedelta(hours=1)
-print("----------")
-o.run(outfile = outname + '.nc')
+
+lons_start = o.elements_scheduled.lon
+lats_start = o.elements_scheduled.lat
+
+o.run()
+#o.run(outfile = outname + '.nc')
+
+index_of_first, index_of_last = o.index_of_activation_and_deactivation()
+lons = o.get_property('lon')[0]
+lats = o.get_property('lat')[0]
+status = o.get_property('status')[0]
+lons_end = lons[index_of_last, range(lons.shape[1])]
+lats_end = lats[index_of_last, range(lons.shape[1])]
+status_end = status[index_of_last, range(lons.shape[1])]
+
+all = np.column_stack([lons_start, lats_start, lons_end, lats_end, status_end])
+np.savetxt(outname + '.txt', all, fmt='%.4f')
 #o.plot(linecolor='z', filename = outname + '.png')
 #o.set_config('environment:fallback:y_sea_water_velocity', 0)
 #o.animation(filename = outname + '.mp4')
+print("Fin simulacion")
+
