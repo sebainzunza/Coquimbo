@@ -22,7 +22,7 @@ print(mosa_native)
 start_date = mosa_native.start_time #tiempo de seeding
 end_date = mosa_native.end_time
 dias_deriva = 15
-num_particles = 5000   # 7200 =1 per hour  for 1 month
+num_particles = 1000   # 7200 =1 per hour  for 1 month
 mindep = -40
 maxdep = -60
 st_lons = []
