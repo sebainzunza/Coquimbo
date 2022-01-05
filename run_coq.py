@@ -38,7 +38,7 @@ with open(filecoord, 'r') as f:
 zd = np.random.rand(num_particles)
 zd = zd*(maxdep - mindep) + mindep
 
-for i in range(0,1):
+for i in range(0,2):
     ini_date = start_date + timedelta(days=i*30)
     print(ini_date)
     all = all = np.array([0, 0, 0, 0, 0, 0, 0])
