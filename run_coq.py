@@ -41,7 +41,7 @@ zd = zd*(maxdep - mindep) + mindep
 for i in range(0,2):
     ini_date = start_date + timedelta(days=i*30)
     print(ini_date)
-    all = np.array([0, 0, 0, 0, 0, 0, 0])
+    all = np.empty([0,7])
     paso = 1
 
     for lat, lon in zip(st_lats, st_lons):
@@ -76,7 +76,7 @@ for i in range(0,2):
 
         uno = np.column_stack([time_start, lons_start, lats_start, time_end, lons_end, lats_end, status_end])
 
-        all = np.row_stack([all, uno])
+        all = np.append(all, uno, axis=0)
         paso = paso + 1
 
 np.savetxt('Loco_Coq_Uniforme_IF_'+str(dias_deriva)+'dias_'+str(num_particles)+'part.txt', all, fmt='%s %.4f %.4f %s %.4f %.4f %i')
