@@ -218,7 +218,6 @@ class SeaLice(OceanDrift):
         Probability of maturation by time-step (t>= Mat)
         death_rate: float
         Probability of death by time-step
-
         Number of lice per particle when generated is standardised to 1
         Returns
         -------
