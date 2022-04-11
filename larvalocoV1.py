@@ -23,8 +23,12 @@ class LarvaLocoElement(Lagrangian3DArray):
                          'description': 'Growth rate of virtual loco larva'}),
         ('length', {'dtype': np.float32,
                     'units': 'um',
-                    'default': 250,
-                    'description': 'Length of virtual loco larva'})])
+                    'default': 0,
+                    'description': 'Length of virtual loco larva'}),
+        ('hatch_larva', {'dtype': np.float32,
+                         'units': 'um',
+                         'default': 250,
+                         'description': 'Size at hatching of loco larva.'})])
 
 class LarvaLoco(OceanDrift):
     """Larva Loco (Conchalepas conchalepas) life cycle model based on the OpenDrift framework.
@@ -69,6 +73,7 @@ class LarvaLoco(OceanDrift):
         return GR*(dt/86400) 
     def update_larvaloco(self):
         length_larva = self.larva_growth(self.environment.sea_water_temperature)
+        self.elements.length = self.elements.hatch_larva
         self.elements.length += length_larva
         
     def update(self):
