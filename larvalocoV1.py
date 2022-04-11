@@ -21,10 +21,6 @@ class LarvaLocoElement(Lagrangian3DArray):
                          'units': 'um/day',
                          'default': 0,
                          'description': 'Growth rate of virtual loco larva'}),
-        ('hatch_larva', {'dtype': np.float32,
-                         'units': 'um',
-                         'default': 0,
-                         'description': 'Size of hatching larva'}),
         ('length', {'dtype': np.float32,
                     'units': 'um',
                     'default': 250,
@@ -59,7 +55,7 @@ class LarvaLoco(OceanDrift):
         # Calling general constructor of parent class
         super(LarvaLoco, self).__init__(*args, **kwargs)
         
-    def larva_growth(self,hatch_larva,T):
+    def larva_growth(self,T):
         """Growth rate in um/dt as a function of sea temperature 
            for each virtual loco larva (Garavelli et al. 2016)
         """
@@ -70,9 +66,9 @@ class LarvaLoco(OceanDrift):
         PLD = np.exp(beta -1.34*np.log(T/15) - (0.28*(np.log(T/15))**2))
         GR = ((1900 - 250)/PLD) 
         self.elements.growth_rate = GR
-        return GR*(dt/86400) + hatch_larva
+        return GR*(dt/86400) 
     def update_larvaloco(self):
-        length_larva = self.larva_growth(self.elements.hatch_larva,self.environment.sea_water_temperature)
+        length_larva = self.larva_growth(self.environment.sea_water_temperature)
         self.elements.length += length_larva
         
     def update(self):
